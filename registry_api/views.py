@@ -8,6 +8,11 @@ def index(request):
 
 
 def house_prices(request):
+    start_date = request.GET.get("from_date")
+    end_date = request.GET.get("to_date")
+    postcode = request.GET.get("postcode")
+    
+    
     return HttpResponse(json.dumps({"msg": "house_prices"}), content_type='application/json')
 
 

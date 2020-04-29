@@ -4,7 +4,7 @@ from django.db import models
 class LandTransaction(models.Model):
     transaction_id = models.CharField(max_length=200)
     price = models.IntegerField()
-    date_of_transfer = models.DateField()
+    date_of_transfer = models.DateTimeField()
     postcode = models.CharField(max_length=100)
     property_type = models.CharField(max_length=10)
     property_age = models.CharField(max_length=10)
