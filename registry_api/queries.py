@@ -4,8 +4,8 @@ from django.db import connection
 def perform_query(sql, params):
     with connection.cursor() as cursor:
         cursor.execute(sql, params)
-        data = cursor.fetchall()
-
+        columns = [col[0] for col in cursor.description]
+        data = [dict(zip(columns, row)) for row in cursor.fetchall()]
     return data
 
 

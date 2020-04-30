@@ -22,7 +22,11 @@ class Command(BaseCommand):
             FROM %s WITH (DELIMITER ',', QUOTE '"', FORMAT 'csv');
         """
 
-        self.stdout.write(self.style.SUCCESS(f"Importing '{file_path}' into DB. Please wait, it will take some time."))
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Importing '{file_path}' into DB. Please wait, it will take some time."
+            )
+        )
         with connection.cursor() as cursor:
             cursor.execute(sql, [file_path])
 
