@@ -34,3 +34,7 @@ def get_average_price(start_date=None, end_date=None, postcode=None):
     sql += " AND ".join(where_clause)
     sql += " GROUP BY period, property_type;"
     return perform_query(sql, params)
+
+
+def get_number_of_transactions(start_date=None, end_date=None, postcode=None):
+    pass
