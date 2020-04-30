@@ -7,30 +7,37 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='LandTransaction',
+            name="LandTransaction",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('transaction_id', models.CharField(max_length=200)),
-                ('price', models.IntegerField()),
-                ('date_of_transfer', models.DateField()),
-                ('postcode', models.CharField(max_length=100)),
-                ('property_type', models.CharField(max_length=10)),
-                ('property_age', models.CharField(max_length=10)),
-                ('duration', models.CharField(max_length=10)),
-                ('paon', models.CharField(max_length=100)),
-                ('saon', models.CharField(max_length=100)),
-                ('street', models.CharField(max_length=100)),
-                ('locality', models.CharField(max_length=100)),
-                ('town', models.CharField(max_length=100)),
-                ('district', models.CharField(max_length=100)),
-                ('county', models.CharField(max_length=100)),
-                ('category_type', models.CharField(max_length=10)),
-                ('record_status', models.CharField(max_length=10)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("transaction_id", models.CharField(max_length=200)),
+                ("price", models.IntegerField()),
+                ("date_of_transfer", models.DateField()),
+                ("postcode", models.CharField(max_length=100)),
+                ("property_type", models.CharField(max_length=10)),
+                ("property_age", models.CharField(max_length=10)),
+                ("duration", models.CharField(max_length=10)),
+                ("paon", models.CharField(max_length=100)),
+                ("saon", models.CharField(max_length=100)),
+                ("street", models.CharField(max_length=100)),
+                ("locality", models.CharField(max_length=100)),
+                ("town", models.CharField(max_length=100)),
+                ("district", models.CharField(max_length=100)),
+                ("county", models.CharField(max_length=100)),
+                ("category_type", models.CharField(max_length=10)),
+                ("record_status", models.CharField(max_length=10)),
             ],
         ),
     ]

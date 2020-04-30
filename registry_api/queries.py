@@ -1,5 +1,6 @@
 from django.db import connection
 
+
 def perform_query(sql, params):
     with connection.cursor() as cursor:
         cursor.execute(sql, params)
@@ -7,16 +8,29 @@ def perform_query(sql, params):
 
     return data
 
-def get_average_price(start_date, end_date, postcode):
+
+def get_average_price(start_date=None, end_date=None, postcode=None):
     sql = """
     SELECT date_trunc('month', date_of_transfer) as period, avg(price) as average_price, property_type
-    FROM registry_api_landtransaction
-    WHERE postcode = %s
-    GROUP BY period, property_type
+    from registry_api_landtransaction
     """
-    
-    
-    return perform_query(sql, [start_date, end_date, postcode])
-    
-    
-    
+    params = []
+    where_clause = []
+    if start_date or end_date or postcode:
+        sql += "WHERE "
+
+    if postcode:
+        where_clause.append("postcode = %s")
+        params.append(postcode)
+
+    if start_date:
+        where_clause.append("date_of_transfer >= %s")
+        params.append(start_date)
+
+    if end_date:
+        where_clause.append("date_of_transfer < %s")
+        params.append(end_date)
+
+    sql += " AND ".join(where_clause)
+    sql += " GROUP BY period, property_type;"
+    return perform_query(sql, params)
