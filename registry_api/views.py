@@ -1,15 +1,16 @@
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest
+import pandas as pd
 
-from .queries import get_average_price
+from .queries import get_average_price, get_transaction_prices
 
 DATE_FORMAT = "%Y-%m-%d"
 
 
-def validate_date_param(date_str):
+def is_valid_date_str(date_str):
     try:
         datetime.strptime(date_str, DATE_FORMAT)
     except ValueError:
@@ -26,8 +27,8 @@ def house_prices(request):
     end_date = request.GET.get("to_date")
     postcode = request.GET.get("postcode")
 
-    if (start_date and not validate_date_param(start_date)) or (
-        end_date and not validate_date_param(end_date)
+    if (start_date and not is_valid_date_str(start_date)) or (
+        end_date and not is_valid_date_str(end_date)
     ):
         return HttpResponseBadRequest(
             json.dumps({"error": "Invalid date format. Should be YYYY-MM-DD"}),
@@ -50,18 +51,25 @@ def house_prices(request):
 
 
 def transactions(request):
-    start_date = request.GET.get("from_date")
+    a_year_ago = datetime.now() - timedelta(days=365)
+    start_date = request.GET.get("from_date", a_year_ago.strftime(DATE_FORMAT))
     end_date = request.GET.get("to_date")
     postcode = request.GET.get("postcode")
 
-    if (start_date and not validate_date_param(start_date)) or (
-        end_date and not validate_date_param(end_date)
+    if (start_date and not is_valid_date_str(start_date)) or (
+        end_date and not is_valid_date_str(end_date)
     ):
         return HttpResponseBadRequest(
             json.dumps({"error": "Invalid date format. Should be YYYY-MM-DD"}),
             content_type="application/json",
         )
 
-    return HttpResponse(
-        json.dumps({"data": "transactions"}), content_type="application/json"
+    data = get_transaction_prices(
+        start_date=start_date, end_date=end_date, postcode=postcode
     )
+
+    response = {}
+    for item in data:
+        response[item["range"]] = item["cnt"]
+
+    return HttpResponse(json.dumps({"data": response}), content_type="application/json")
