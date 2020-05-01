@@ -40,14 +40,13 @@ def get_average_price(start_date=None, end_date=None, postcode=None):
     return perform_query(sql, params)
 
 
-def get_transaction_prices(start_date=None, end_date=None, postcode=None):
+def group_transaction_prices(start_date=None, end_date=None, postcode=None):
     """
     This function executes a query over registry_api_landtransaction table
     The query groups the price column bu price intervals automatically using 
     width_bucket function.
     """
-    
-    
+
     min_max_sql = """
         SELECT
             min(price) as min_price,

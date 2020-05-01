@@ -3,9 +3,8 @@ from datetime import datetime, timedelta
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest
-import pandas as pd
 
-from .queries import get_average_price, get_transaction_prices
+from .queries import get_average_price, group_transaction_prices
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -64,7 +63,7 @@ def transactions(request):
             content_type="application/json",
         )
 
-    data = get_transaction_prices(
+    data = group_transaction_prices(
         start_date=start_date, end_date=end_date, postcode=postcode
     )
 
