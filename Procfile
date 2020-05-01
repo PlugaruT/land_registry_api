@@ -1,0 +1,1 @@
+web: gunicorn land_registry_api.wsgi --log-file -

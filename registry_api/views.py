@@ -39,10 +39,12 @@ def house_prices(request):
     )
 
     response = {}
+    
+    
     for item in data:
-        response[item[0].strftime(DATE_FORMAT)] = {
-            "average_price": float(item[1]),
-            "property_type": item[2],
+        response[item['period'].strftime(DATE_FORMAT)] = {
+            "average_price": float(item['average_price']),
+            "property_type": item['property_type'],
         }
 
     return HttpResponse(json.dumps({"data": response}), content_type="application/json")
