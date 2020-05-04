@@ -37,13 +37,13 @@ This command will read the file and will insert all it's contents into the datab
 
 At the moment, there are only two endpoints available.
 
- - `/house-prices` is the endpoint where data is grouped by month for each property type.
+ - `/api/v1/house-prices` is the endpoint where data is grouped by month for each property type.
     
     For filtering of the data, there are a few query params available:
     - `from_date`, a string of the format `YYYY-MM-DD` representing from which date the data should be filtered.
     - `to_date`, a string of the format `YYYY-MM-DD` representing to which date the data should be filtered.
     - `postcode`, a string representing the postcode of the region where the land is located.
- - `/transactions` is the endpoint where transactions are grouped by price range types.
+ - `/api/v1/transactions` is the endpoint where transactions are grouped by price range types.
  
     For filtering of the data, there are a few query params available:
     - `from_date`, a string of the format `YYYY-MM-DD` representing from which date the data should be filtered.
