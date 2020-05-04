@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest
 
+from .constants import property_types
 from .queries import get_average_price, group_transaction_prices
 
 DATE_FORMAT = "%Y-%m-%d"
@@ -43,7 +44,9 @@ def house_prices(request):
     for item in data:
         response[item["period"].strftime(DATE_FORMAT)] = {
             "average_price": float(item["average_price"]),
-            "property_type": item["property_type"],
+            "property_type": property_types.get(
+                item["property_type"], item["property_type"]
+            ),
         }
 
     return HttpResponse(json.dumps({"data": response}), content_type="application/json")

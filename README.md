@@ -42,10 +42,25 @@ At the moment, there are only two endpoints available.
     For filtering of the data, there are a few query params available:
     - `from_date`, a string of the format `YYYY-MM-DD` representing from which date the data should be filtered.
     - `to_date`, a string of the format `YYYY-MM-DD` representing to which date the data should be filtered.
-    - `postcode`, a string represending the postcode of the region where the land is located.
+    - `postcode`, a string representing the postcode of the region where the land is located.
  - `/transactions` is the endpoint where transactions are grouped by price range types.
  
     For filtering of the data, there are a few query params available:
     - `from_date`, a string of the format `YYYY-MM-DD` representing from which date the data should be filtered.
     - `to_date`, a string of the format `YYYY-MM-DD` representing to which date the data should be filtered.
-    - `postcode`, a string represending the postcode of the region where the land is located.
+    - `postcode`, a string representing the postcode of the region where the land is located.
+    
+    
+### DB Tweaks
+
+The SQL queries that are aggregating the data are relatively simple, but because of tha amount of data to aggregate, they are slow.
+Because of this, I've added to `registry_api_landtransaction` two indexes, for `postcode` and `price` columns. After I've added these two indexes, I've seen a quite big jump in terms of speed, especially when filtering by postcode. 
+There is one more issue, filtering by date range is quite slow in my opinion, and I wasn't able to find a decent solution 😞.
+
+### Decisions
+
+As you might have noticed, I haven't used Django ORM at all. Now, there are a few reasons why:
+ - First, I could use the ORM when reading the file and storing data into DB, but, it would be very slow and doing the same action using SQL adds a big performance benefit.
+ - When aggregating data, I decided to go with SQL because SQL is very good at aggregating big amount of data and the ORM would just be an intermediate layer I decided to skip.
+
+I know this may be a controversy decision, when to use and when to now use the ORM, but, if the task would be to build a CRUD API, I would definitely choose to use the ORM, but in this particular case, I decided to go with SQL because it's just better for this kind of job.
