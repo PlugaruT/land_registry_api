@@ -1,4 +1,4 @@
-# Backend Code Challenge - Plentific
+# Backend Code Challenge
 
 This project represents a web application written in Django. The application is able to seed it's database with CSV files from [here](https://data.gov.uk/dataset/4c9b7641-cf73-4fd9-869a-4bfeed6d440e/hm-land-registry-price-paid-data).
 
